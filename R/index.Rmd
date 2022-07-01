@@ -1,0 +1,86 @@
+---
+title: "Election Data"
+author: "Group 32"
+date: "5/22/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo=FALSE, message=FALSE)
+library(data.table)
+library(R.utils)
+library(openintro)
+library(dplyr)
+library(ggplot2)
+library(formattable)
+library(tidyr)
+library(tm)
+library(knitr)
+library(openintro)
+
+source("~R/a7-rscript.R") 
+source("~R/calculation function.R")
+source("~R/chart_two.R") 
+```
+
+# Summary 
+
+Using information about the US Presidential elections found in the presidential_2008-2016 
+csv file, we sought to find out some details regarding the political parties and votes. 
+First, we wanted simple answers such as the total percentage of democratic voters in the 
+2008 election, the total vote data of the state of Alaska (since it is missing from the 
+csv file data), and which state had the maximum democratic votes in 2008. Next, we wanted 
+to find out if there was a correlation between median income and Republican votes and 
+whether that correlation was positive or negative. Finally, we wanted to see a geographic 
+visual of all counties in the country and which political party dominated, Democrat or 
+Republican.
+
+
+# Simple Answers
+
+```{r}
+dem_votes <- percent_votes("dem", "2008", table)
+```
+
+The total percentage of democratic votes in the 2008 election was **`r dem_votes`** 
+
+This is the total vote data for our state of Washington:
+```{r}
+state_list <- state_info("WA")
+kable(state_list)
+```
+
+```{r}
+compare <- compare_votes("dem", "2008", "max")
+compare_state <- abbr2state(compare) 
+```
+The state that had the maximum democratic votes in 2008 was **`r compare_state`**.
+
+# Correlation
+```{r}
+
+correlation_function(2008)
+
+```
+
+In this scatterplot, we see information regarding the 2008 US Presidential Election.
+Here, we tried to find a correlation between the median income of voters and the 
+number of Republican votes. Using a line of best fit, we discovered that there is a 
+positive correlation between these two variables. We expect that as median income 
+increases, the number of Republican votes increase.
+
+
+
+# Majority
+```{r}
+
+majority_func(2008)
+
+```
+
+Here, we see some information about the 2008 US Presidential Election. In this map,
+the red highlights all counties in which the Democratic party was the most popular
+vote. Also, the blue highlights all counties where the Republican party was the most
+popular. According to this map diagram, Republican votes dominate the country 
+geographically.
